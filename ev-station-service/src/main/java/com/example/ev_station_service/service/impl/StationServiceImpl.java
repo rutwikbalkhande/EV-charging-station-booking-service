@@ -4,6 +4,7 @@ import com.example.ev_station_service.dto.StationDTO;
 import com.example.ev_station_service.dto.StationResponseDTO;
 import com.example.ev_station_service.dto.StationUpdateDTO;
 import com.example.ev_station_service.entity.Station;
+import com.example.ev_station_service.exception.StationNotFoundException;
 import com.example.ev_station_service.mapper.StationMapper;
 import com.example.ev_station_service.repository.StationRepository;
 import com.example.ev_station_service.service.StationService;
@@ -47,7 +48,7 @@ public class StationServiceImpl implements StationService {
     @Override
     public StationResponseDTO getStationById(Long id) {
         return repository.findById(id).map(mapper::toDTO)
-                      .orElseThrow(()-> new RuntimeException("station not found!"));
+                      .orElseThrow(()-> new StationNotFoundException("Station with ID:" + id + " not found!"));
     }
 
     @Override
@@ -57,35 +58,40 @@ public class StationServiceImpl implements StationService {
 
     @Override
     public List<StationResponseDTO> searchStations(String name, String location) {
-        return repository.findByNameContainingAndLocationContaining(name, location)
+        List<StationResponseDTO> stationSearches = repository.findByNameContainingAndLocationContaining(name, location)
                 .stream()
                 .map(mapper::toDTO)
                 .toList();
+
+        if(stationSearches.isEmpty()){
+            throw new StationNotFoundException("no station found with name: " + name +" location: "+ location);
+        }
+        return stationSearches;
     }
 
     @Override
     public List<StationResponseDTO> filterStationsByAvailableSlots(int minSlots) {
         return repository.findByAvailableSlotsGreaterThan(minSlots)
                     .stream().map(mapper::toDTO).toList();
-
     }
 
     @Override
     public void deleteStation(Long id) {
         if(!repository.existsById(id)){
-            throw new RuntimeException("id not found!");
+            throw new StationNotFoundException("Station with ID " + id + " not found");
         }
         else {
             repository.deleteById(id);
         }
-
     }
 
     @Override
     public List<StationResponseDTO> getAvailableStations() {
-        return repository.findByAvailableSlotsGreaterThan(0)
+         List<StationResponseDTO> availableStation =  repository.findByAvailableSlotsGreaterThan(0)
                 .stream()
                 .map(mapper::toDTO)
                 .toList();
+
+        return availableStation;
     }
 }
