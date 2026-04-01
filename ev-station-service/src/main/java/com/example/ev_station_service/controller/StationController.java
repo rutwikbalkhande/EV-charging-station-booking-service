@@ -3,10 +3,9 @@ package com.example.ev_station_service.controller;
 import com.example.ev_station_service.dto.StationDTO;
 import com.example.ev_station_service.dto.StationResponseDTO;
 import com.example.ev_station_service.dto.StationUpdateDTO;
-import com.example.ev_station_service.entity.Station;
 import com.example.ev_station_service.service.StationService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,13 +14,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/stations")
+@RequiredArgsConstructor
 public class StationController {
 
-    @Autowired
-    private StationService service;
+    private final StationService service;
 
     @PostMapping()
-    public ResponseEntity<StationResponseDTO> create(@RequestBody StationDTO dto) {
+    public ResponseEntity<StationResponseDTO> create(@Valid @RequestBody StationDTO dto) {
         return ResponseEntity.ok(service.createStation(dto));
     }
 
