@@ -59,7 +59,7 @@ public class StationController {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<List<StationResponseDTO>> filter( @RequestParam int minSlots) {
+    public ResponseEntity<List<StationResponseDTO>> filter(@RequestParam int minSlots) {
         return ResponseEntity.ok(service.filterStationsByAvailableSlots(minSlots));
     }
 
