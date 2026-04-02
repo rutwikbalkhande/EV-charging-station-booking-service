@@ -20,7 +20,7 @@ public class StationController {
     private final StationService service;
 
     @PostMapping()
-    public ResponseEntity<StationResponseDTO> create(@Valid @RequestBody StationDTO dto) {
+    public ResponseEntity<StationResponseDTO> create( @Valid @RequestBody StationDTO dto) {
         return ResponseEntity.ok(service.createStation(dto));
     }
 
