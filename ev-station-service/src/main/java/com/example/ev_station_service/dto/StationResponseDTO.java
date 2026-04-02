@@ -15,6 +15,6 @@ public class StationResponseDTO {
     private String name;
     private String location;
 
-   @Min(value = 0 , message = "slot cannot be negative")
+    @Min(value = 0 , message = "slot cannot be negative")
     private int availableSlots;
 }
