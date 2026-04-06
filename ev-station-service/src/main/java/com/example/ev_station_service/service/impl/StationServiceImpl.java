@@ -1,5 +1,8 @@
 package com.example.ev_station_service.service.impl;
 
+import com.example.ev_station_service.annotation.AuditAction;
+import com.example.ev_station_service.annotation.CheckRole;
+import com.example.ev_station_service.annotation.LogExecutionTime;
 import com.example.ev_station_service.dto.StationDTO;
 import com.example.ev_station_service.dto.StationResponseDTO;
 import com.example.ev_station_service.dto.StationUpdateDTO;
@@ -25,15 +28,16 @@ public class StationServiceImpl implements StationService {
     private StationMapper mapper;
 
     @Override
+    @AuditAction(action = "create")
     public StationResponseDTO createStation(StationDTO dto) {
        Station station = mapper.toEntity(dto);
-
         return  mapper.toDTO(repository.save(station));
     }
 
     @Override
+    @AuditAction(action = "update")
     public StationResponseDTO updateStation(Long id, StationDTO dto) {
-         Station station= repository.findById(id).orElseThrow( ()->new RuntimeException("station not found"));
+         Station station= repository.findById(id).orElseThrow( ()->new RuntimeException("station not found id: "+ id));
         mapper.updateEntityFromDto(dto, station);
         return mapper.toDTO(repository.save(station));
     }
@@ -46,12 +50,14 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
+    @LogExecutionTime
     public StationResponseDTO getStationById(Long id) {
         return repository.findById(id).map(mapper::toDTO)
                       .orElseThrow(()-> new StationNotFoundException("Station with ID:" + id + " not found!"));
     }
 
     @Override
+    @LogExecutionTime
     public Page<StationResponseDTO> getAllStations(int page, int size) {
         return repository.findAll(PageRequest.of(page, size)).map(mapper::toDTO);
     }
@@ -76,9 +82,11 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
+    @CheckRole("ADMIN")
+    @AuditAction(action = "DELETE")
     public void deleteStation(Long id) {
         if(!repository.existsById(id)){
-            throw new StationNotFoundException("Station with ID " + id + " not found");
+            throw new StationNotFoundException("Station with ID: " + id + " not found");
         }
         else {
             repository.deleteById(id);
@@ -87,11 +95,11 @@ public class StationServiceImpl implements StationService {
 
     @Override
     public List<StationResponseDTO> getAvailableStations() {
-         List<StationResponseDTO> availableStation =  repository.findByAvailableSlotsGreaterThan(0)
+        return  repository.findByAvailableSlotsGreaterThan(0)
                 .stream()
                 .map(mapper::toDTO)
                 .toList();
 
-        return availableStation;
+
     }
 }
