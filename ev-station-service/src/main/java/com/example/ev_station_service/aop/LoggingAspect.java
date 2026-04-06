@@ -16,16 +16,15 @@ public class LoggingAspect {
     // ✅ FIXED package path
     @Pointcut("execution(* com.example.ev_station_service.controller..*(..)) || " +
             "execution(* com.example.ev_station_service.service..*(..))")
-
     public void applicationPackagePointcut() {}
 
     // 🔹 Before method
     @Before("applicationPackagePointcut()")
     public void logBefore(JoinPoint joinPoint) {
         log.info("➡️ Entering: {}.{}() args={}",
-                joinPoint.getSignature().getDeclaringTypeName(),
-                joinPoint.getSignature().getName(),
-                Arrays.toString(joinPoint.getArgs()));
+                joinPoint.getSignature().getDeclaringTypeName(),  // class name
+                joinPoint.getSignature().getName(),                // method name
+                Arrays.toString(joinPoint.getArgs()));           // data value argument pass in url ex.: 15
     }
 
     // 🔹 After returning

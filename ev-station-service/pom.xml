@@ -49,12 +49,12 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Eureka
+		<!-- Eureka  -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
- -->
+
 		<!-- Lombok (FIXED) -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>

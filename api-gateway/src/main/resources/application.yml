@@ -8,10 +8,10 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: test-service
-          uri: lb://Station-service
+        - id: ev-station-service
+          uri: lb://EV-STATION-SERVICE
           predicates:
-            - Path=/station/**
+            - Path=/api/stations/**
 
 eureka:
   client:
