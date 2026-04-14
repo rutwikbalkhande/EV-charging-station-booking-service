@@ -2,6 +2,8 @@ server:
   port: 8081
 
 spring:
+  profiles:
+    active: dev
   application:
     name: station-service   # IMPORTANT (used by Gateway)
 

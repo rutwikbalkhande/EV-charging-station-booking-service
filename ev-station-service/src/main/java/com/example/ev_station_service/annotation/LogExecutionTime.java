@@ -9,9 +9,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface LogExecutionTime {
 
-    // create annotation @LogExcecution time. use in Service impli class with method: getAllStations(), getById().
-    // pkg: annotation  => all classes impliment in aop pkg.
-    // check pkg. "aop"  # class: "PerformanceAspect"  class there impliment method execute timing.
-    // which is use in service impli layer method: getById, getAllStations.
+    // @LogExcecution time. use in method: "getAllStations(), getById()". Service impli class.
+    // pkg: annotation  => all classes implement in aop pkg.
+    // check pkg. "aop"  # class: "PerformanceAspect"  class there implement method execute timing.
 
 }

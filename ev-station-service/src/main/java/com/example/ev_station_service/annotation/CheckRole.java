@@ -11,6 +11,7 @@ public @interface CheckRole {
 
     String value();
 }
+
+// @CheckRole("ADMIN") // USER annotation created : using this class @interface CheckRole{ }  we create custom annotation.
 // Custom Annotation Created.
-// @CheckRole annotation created : using this class @interface CheckRole{ }  we create custom annotation.
 // aop pkg => SecurityAspect

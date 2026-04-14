@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class AuditAspect {
-// use in Serviceimpl with CREATE / UPDATE / DELETE methods.
 
     @AfterReturning(value = "@annotation(audit)", returning = "result")
     public void auditLog(JoinPoint joinPoint, AuditAction audit, Object result){
@@ -40,6 +39,7 @@ public class AuditAspect {
     }
 }
 
+// SecurityUtil.getCurrentRole available in pkg:= security
 /*
 🚀 When to Use What
 Use Case	Aspect

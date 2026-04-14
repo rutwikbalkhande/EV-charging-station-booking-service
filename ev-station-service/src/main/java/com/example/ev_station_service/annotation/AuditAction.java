@@ -12,3 +12,5 @@ public @interface AuditAction {
 
     String action();
 }
+// @AuditAspect(action="create)= use in Serviceimpl with "CREATE / UPDATE / DELETE" methods.
+// implement all Custom Annotation logs logic in aop pkg.

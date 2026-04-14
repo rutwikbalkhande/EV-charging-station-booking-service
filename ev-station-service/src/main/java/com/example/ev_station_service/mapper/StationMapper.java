@@ -1,27 +1,19 @@
 package com.example.ev_station_service.mapper;
 
-import com.example.ev_station_service.dto.StationDTO;
-import com.example.ev_station_service.dto.StationResponseDTO;
-import com.example.ev_station_service.dto.StationUpdateDTO;
+
+import com.example.ev_station_service.dto.StationRequestDto;
+import com.example.ev_station_service.dto.StationResponseDto;
 import com.example.ev_station_service.entity.Station;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface StationMapper {
 
-    // CREATE
-    Station toEntity(StationDTO dto);
+    Station toEntity(StationRequestDto dto);
 
-    // RESPONSE
-    StationResponseDTO toDTO(Station station);
+    StationResponseDto toResponseDto(Station entity);
 
-    // FULL UPDATE (PUT)
-    void updateEntityFromDto(StationDTO dto, @MappingTarget Station entity);
-
-    // PARTIAL UPDATE (PATCH)
+    // ✅ Partial update
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateEntityFromDto(StationUpdateDTO dto, @MappingTarget Station entity);
+    void updateEntityFromDto(StationRequestDto dto, @MappingTarget Station entity);
 }

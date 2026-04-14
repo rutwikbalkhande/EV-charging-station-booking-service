@@ -1,30 +1,23 @@
 package com.example.ev_station_service.service;
 
-import com.example.ev_station_service.dto.StationDTO;
-import com.example.ev_station_service.dto.StationResponseDTO;
-import com.example.ev_station_service.dto.StationUpdateDTO;
+
+import com.example.ev_station_service.dto.StationRequestDto;
+import com.example.ev_station_service.dto.StationResponseDto;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-
 public interface StationService {
 
- StationResponseDTO createStation(StationDTO dto);
-
- StationResponseDTO updateStation(Long id, StationDTO dto);
-
- StationResponseDTO partialUpdateStation(Long id, StationUpdateDTO dto);
-
- StationResponseDTO getStationById(Long id);
-
- Page<StationResponseDTO> getAllStations(int page, int size);
-
- List<StationResponseDTO> searchStations(String name, String location);
-
- List<StationResponseDTO> filterStationsByAvailableSlots(int minSlots);
-
+ StationResponseDto addStation(StationRequestDto requestDto);
+ List<StationResponseDto> getAllStations();
+ StationResponseDto getStationById(Long id);
+ StationResponseDto updateStation(Long id, StationRequestDto requestDto);
  void deleteStation(Long id);
+ List<StationResponseDto> searchStations(String location);
+ List<StationResponseDto> getAvailableStations();
+ //List<StationResponseDto> filterByMinSlots(int minSlots);
+ public Page<StationResponseDto> getStations(int page, int size);
 
- List<StationResponseDTO> getAvailableStations();
+ Page<StationResponseDto> getStations(int page, int size, String sortBy, String sortDirection);
 }

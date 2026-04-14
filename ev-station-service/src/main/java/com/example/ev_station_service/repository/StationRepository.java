@@ -2,21 +2,17 @@ package com.example.ev_station_service.repository;
 
 import com.example.ev_station_service.entity.Station;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
 @Repository
 public interface StationRepository extends JpaRepository <Station, Long> {
 
-    List<Station> findByAvailableSlotsGreaterThan(int slots);   // JPQL internally => @Query("SELECT s FROM Station s WHERE s.availableSlots > :slots")
-
-    List<Station> findByNameContainingAndLocationContaining(String name, String location);
-
-    @Query(value = "SELECT * FROM station WHERE available_slots > :slots", nativeQuery = true)
-    List<Station> getStations(@Param("slots") int slots);
+    List<Station> findByLocationContainingIgnoreCase(String location);
+    List<Station> findByAvailableSlotsGreaterThanEqual(int slots);
 }
 
 /*
